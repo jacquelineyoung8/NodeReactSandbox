@@ -56,31 +56,83 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
+	// const _ = require('lodash');
 
-	var CommentBox = function (_React$Component) {
-	  _inherits(CommentBox, _React$Component);
+	var Note = function (_React$Component) {
+	  _inherits(Note, _React$Component);
 
-	  function CommentBox() {
-	    _classCallCheck(this, CommentBox);
+	  function Note(props) {
+	    _classCallCheck(this, Note);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Note).call(this, props));
+
+	    _this.name = _this.props.name;
+	    _this.pic = _this.name + '.gif';
+	    _this.soundFile = new Audio('Note_Sounds/' + _this.name + '.wav');
+
+	    // this.state = {value: this.props.value};
+	    _this.play = _this.play.bind(_this);
+	    return _this;
 	  }
 
-	  _createClass(CommentBox, [{
+	  _createClass(Note, [{
+	    key: 'play',
+	    value: function play(event) {
+	      this.soundFile.play();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return React.createElement('img', { onClick: this.play, src: 'Note_Pics/' + this.pic, name: this.name });
+	    }
+	  }]);
+
+	  return Note;
+	}(React.Component);
+
+	var pianoStyle = {
+	  color: 'green',
+	  backgroundColor: "#800080"
+	};
+
+	var Piano = function (_React$Component2) {
+	  _inherits(Piano, _React$Component2);
+
+	  function Piano() {
+	    _classCallCheck(this, Piano);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Piano).apply(this, arguments));
+	  }
+
+	  _createClass(Piano, [{
+	    key: '_getNotes',
+	    value: function _getNotes() {
+
+	      var noteList = ["c1", "c1Sharp", "d1", "d1Sharp", "e1", "f1", "f1Sharp", "g1", "g1Sharp", "a1", "a1Sharp", "b1", "c2", "c2Sharp", "d2", "d2Sharp", "e2", "f2", "f2Sharp", "g2", "g2Sharp", "a2", "a2Sharp", "b2"];
+
+	      return noteList.map(function (noteName) {
+	        return React.createElement(Note, { name: noteName });
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return React.createElement(
 	        'div',
-	        { className: 'commentBox' },
-	        'Hello, I am a CommentBox.'
+	        { style: pianoStyle, className: 'NoteBox' },
+	        React.createElement(
+	          'p',
+	          { className: 'header' },
+	          this._getNotes()
+	        )
 	      );
 	    }
 	  }]);
 
-	  return CommentBox;
+	  return Piano;
 	}(React.Component);
 
-	ReactDOM.render(React.createElement(CommentBox, null), document.getElementById('example'));
+	ReactDOM.render(React.createElement(Piano, null), document.getElementById('example'));
 
 /***/ },
 /* 1 */
